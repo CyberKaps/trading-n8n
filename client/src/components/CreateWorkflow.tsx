@@ -82,7 +82,7 @@ export default function CreateWorkflow() {
   )
  
   return (
-    <div style={{ width: '100vw', height: '100vh' }}>
+    <div style={{ width: '100vw', height: '100vh' }} className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
         {!nodes.length && <TriggerSheet onSelect={(type, metadata) => {
                 
             setNodes([...nodes, {
@@ -122,6 +122,7 @@ export default function CreateWorkflow() {
         onConnect={onConnect}
         onConnectEnd={onConnectEnd}
         fitView
+        className="bg-transparent"
       />
     </div>
   );

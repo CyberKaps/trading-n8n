@@ -47,19 +47,19 @@ export const TriggerSheet = ({
     });
     const [selectedTrigger, setSelectedTrigger] = useState(SUPPORTED_TRIGGERS[0].id);
     return <Sheet open={true}>
-      <SheetContent>
+      <SheetContent className="bg-slate-900 border-l border-slate-700">
         <SheetHeader>
-          <SheetTitle>Select Trigger</SheetTitle>
-          <SheetDescription>
-            Select the type of trigger you would like to add to your workflow.
+          <SheetTitle className="text-2xl font-bold text-white">✨ Select Trigger</SheetTitle>
+          <SheetDescription className="text-slate-300 space-y-4">
+            <p className="text-sm">Select the type of trigger you would like to add to your workflow.</p>
             <Select value={selectedTrigger} onValueChange={(Value) => setSelectedTrigger(Value)}>
-                <SelectTrigger className="w-full">
+                <SelectTrigger className="w-full bg-slate-800 border-slate-600 text-white hover:bg-slate-700 transition-colors">
                     <SelectValue placeholder="Select a trigger" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-slate-800 border-slate-600">
                     <SelectGroup>
                     {SUPPORTED_TRIGGERS.map(({id, title, description}) => <>
-                        <SelectItem key={id} value={id}>{title}</SelectItem>
+                        <SelectItem key={id} value={id} className="text-white hover:bg-slate-700 focus:bg-slate-700">{title}</SelectItem>
                         {/* <SelectLabel>{description}</SelectLabel> */}
                     </>)}
                     </SelectGroup>
@@ -74,40 +74,44 @@ export const TriggerSheet = ({
                 
             </div>}
 
-            {selectedTrigger === "price-trigger" && <div>
-                Price:
-                <Input type="text" onChange={(e) => setMetadata(metadata => ({
-                    ...metadata,
-                    price: Number(e.target.value)
-                }))} />
-                Asset: 
-                <Select value={metadata.asset} onValueChange={(Value) => setMetadata(metadata => ({
-                    ...metadata, 
-                    asset: Value
-                    }))}>
-                    <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select an asset" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectGroup>
-                        {SUPPORTED_ASSETS.map((id) => <>
-                            <SelectItem key={id} value={id}>{id}</SelectItem>
-                        </>)}
-                        </SelectGroup>
-                    </SelectContent>
-                </Select>
+            {selectedTrigger === "price-trigger" && <div className="space-y-4 mt-6 p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+                <div className="space-y-2">
+                    <label className="text-sm font-semibold text-slate-200 block">💰 Target Price</label>
+                    <Input type="text" placeholder="e.g., 140" className="bg-slate-800 border-slate-600 text-white placeholder:text-slate-500 focus:border-green-500 focus:ring-1 focus:ring-green-500" onChange={(e) => setMetadata(metadata => ({
+                        ...metadata,
+                        price: Number(e.target.value)
+                    }))} />
+                </div>
+                <div className="space-y-2">
+                    <label className="text-sm font-semibold text-slate-200 block">🪙 Asset</label>
+                    <Select value={metadata.asset} onValueChange={(Value) => setMetadata(metadata => ({
+                        ...metadata, 
+                        asset: Value
+                        }))}>
+                        <SelectTrigger className="w-full bg-slate-800 border-slate-600 text-white hover:bg-slate-700 transition-colors">
+                            <SelectValue placeholder="Select an asset" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-slate-800 border-slate-600">
+                            <SelectGroup>
+                            {SUPPORTED_ASSETS.map((id) => <>
+                                <SelectItem key={id} value={id} className="text-white hover:bg-slate-700 focus:bg-slate-700">{id}</SelectItem>
+                            </>)}
+                            </SelectGroup>
+                        </SelectContent>
+                    </Select>
+                </div>
             </div>}
 
 
           </SheetDescription>
         </SheetHeader>
-        <SheetFooter>
+        <SheetFooter className="mt-8">
           <Button onClick={() => {
             onSelect(
                 selectedTrigger as NodeKind,
                 metadata
             )
-          }} type="submit">Create Trigger</Button>
+          }} type="submit" className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-6 text-base shadow-lg shadow-blue-900/50 transition-all">🚀 Create Trigger</Button>
         </SheetFooter>
       </SheetContent>
     </Sheet>
