@@ -15,8 +15,8 @@ export const PriceTrigger = ({data, isConnectable}: {
     isConnectable: boolean
 }) => {
     return <div className="p-4 border">
-        {data.metadata.asset ? `Every ${data.metadata.asset}` : "Set timer interval"}
-        {data.metadata.price ? ` at price ${data.metadata.price}` : "Set target price"}
+        <div>{data.metadata.asset }</div>
+        <div>{data.metadata.price}</div>
         <Handle type="source" position={Position.Right}>
 
         </Handle>
