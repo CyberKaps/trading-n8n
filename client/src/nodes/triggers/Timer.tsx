@@ -11,7 +11,7 @@ export const Timer = ({data}: {
     isConnectable: boolean
 }) => {
     return <div className="p-4 border">
-        {data.metadata.time ? `Every ${data.metadata.time / 3600} seconds` : "Set timer interval"}
+        {data.metadata.time ? `Every ${data.metadata.time} seconds` : "Set timer interval"}
         <Handle type="source" position={Position.Right}>
 
         </Handle>

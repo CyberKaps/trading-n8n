@@ -35,7 +35,7 @@ const SUPPORTED_TRIGGERS = [{
     description: "Run this trigger when a specific price is hit",
 }]
 
-const SUPPORTED_ASSETS = ["SOL", "BTC", "ETH"];
+export const SUPPORTED_ASSETS = ["SOL", "BTC", "ETH"];
 
 export const TriggerSheet = ({
     onSelect
