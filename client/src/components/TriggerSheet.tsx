@@ -67,8 +67,8 @@ export const TriggerSheet = ({
             </Select>
 
             {selectedTrigger === "timer" && <div>
-                Time Interval (in seconds):
-                <Input type="text" onChange={(e) => setMetadata({
+                Number of seconds after which to run the timer
+                <Input value={metadata.time} onChange={(e) => setMetadata({
                     time: Number(e.target.value)
                 })} />
                 
