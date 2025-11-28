@@ -24,6 +24,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 import { useState } from "react";
+import { Value } from "@radix-ui/react-select";
+import { validators } from "tailwind-merge";
 
 
 
@@ -43,23 +45,21 @@ export const TriggerSheet = ({
     onSelect: (kind: NodeKind, metadata: NodeMetadata) => void
 }) => {
     const [metadata, setMetadata] = useState({});
+    const [selectedTrigger, setSelectedTrigger] = useState(SUPPORTED_TRIGGERS[0].id);
     return <Sheet open={true}>
       <SheetContent>
         <SheetHeader>
           <SheetTitle>Select Trigger</SheetTitle>
           <SheetDescription>
             Select the type of trigger you would like to add to your workflow.
-            <Select>
-                <SelectTrigger className="w-[180px]">
+            <Select value={selectedTrigger} onValueChange={(Value) => setSelectedTrigger(Value)}>
+                <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select a trigger" />
                 </SelectTrigger>
                 <SelectContent>
                     <SelectGroup>
                     {SUPPORTED_TRIGGERS.map(({id, title, description}) => <>
-                        <SelectItem onSelect={() => onSelect(
-                            id,
-                            metadata
-                        )} value={id}>{title}</SelectItem>
+                        <SelectItem key={id} value={id}>{title}</SelectItem>
                         {/* <SelectLabel>{description}</SelectLabel> */}
                     </>)}
                     </SelectGroup>
@@ -68,12 +68,13 @@ export const TriggerSheet = ({
 
           </SheetDescription>
         </SheetHeader>
-        
         <SheetFooter>
-          <Button type="submit">Save changes</Button>
-          <SheetClose asChild>
-            <Button variant="outline">Close</Button>
-          </SheetClose>
+          <Button onClick={() => {
+            onSelect(
+                selectedTrigger as NodeKind,
+                metadata
+            )
+          }} type="submit">Create Trigger</Button>
         </SheetFooter>
       </SheetContent>
     </Sheet>

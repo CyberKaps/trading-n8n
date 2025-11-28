@@ -9,7 +9,8 @@ interface NodeType {
     data: {
         type: "action" | "trigger",
         kind: NodeKind,
-        metadata: NodeMetadata
+        metadata: NodeMetadata,
+        label: string
     },
     id: string, position: { x: number, y: number }
 }
@@ -42,12 +43,14 @@ export default function CreateWorkflow() {
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
         {!nodes.length && <TriggerSheet onSelect={(kind, metadata) => {
+                
                 setNodes([...nodes, {
                 id: Math.random().toString(),
                 data: { 
                     type: "trigger", 
                     kind, 
-                    metadata 
+                    metadata,
+                    label: kind
                 },
                 position: { x: 0, y: 0 },
             }])
