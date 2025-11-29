@@ -19,8 +19,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 import { useState } from "react";
-import type { PriceTriggerMetadata } from "@/nodes/triggers/PriceTrigger";
-import type { TimerNodeMetadata } from "@/nodes/triggers/Timer";
+import type { PriceTriggerMetadata, TimerNodeMetadata } from "common/types";
 import { Input } from "./ui/input";
 
 
@@ -35,7 +34,6 @@ const SUPPORTED_TRIGGERS = [{
     description: "Run this trigger when a specific price is hit",
 }]
 
-export const SUPPORTED_ASSETS = ["SOL", "BTC", "ETH"];
 
 export const TriggerSheet = ({
     onSelect

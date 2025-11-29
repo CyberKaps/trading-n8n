@@ -1,6 +1,6 @@
 
 import { Handle, Position } from "@xyflow/react"
-import type { TradingMetadata } from "./Lighter"
+import { type TradingMetadata } from "common/types"
 
 export const Backpack = ({data}: {
     data: {

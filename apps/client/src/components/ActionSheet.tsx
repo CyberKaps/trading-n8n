@@ -19,11 +19,9 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 import { useState } from "react";
-import type { PriceTriggerMetadata } from "@/nodes/triggers/PriceTrigger";
-import type { TimerNodeMetadata } from "@/nodes/triggers/Timer";
 import { Input } from "./ui/input";
-import type { TradingMetadata } from "@/nodes/actions/Lighter";
-import { SUPPORTED_ASSETS } from "./TriggerSheet";
+import type { TradingMetadata } from "common/types";
+import { SUPPORTED_ASSETS } from "common/types";
 
 
 
