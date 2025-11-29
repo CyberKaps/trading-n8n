@@ -52,53 +52,53 @@ export const ActionSheet = ({
     return <Sheet open={true}>
       <SheetContent className="bg-slate-900 border-l border-slate-700">
         <SheetHeader>
-          <SheetTitle className="text-2xl font-bold text-white">⚡ Select Action</SheetTitle>
-          <SheetDescription className="text-slate-300 space-y-4">
+          <SheetTitle className="text-xl font-semibold text-slate-100">Select Action</SheetTitle>
+          <SheetDescription className="text-slate-400 space-y-4">
             <p className="text-sm">Select the type of action you would like to add to your workflow.</p>
             <Select value={selectedAction} onValueChange={(Value) => setSelectedAction(Value)}>
-                <SelectTrigger className="w-full bg-slate-800 border-slate-600 text-white hover:bg-slate-700 transition-colors">
+                <SelectTrigger className="w-full bg-slate-800 border-slate-600 text-slate-100 hover:bg-slate-750 transition-colors">
                     <SelectValue placeholder="Select an action" />
                 </SelectTrigger>
                 <SelectContent className="bg-slate-800 border-slate-600">
                     <SelectGroup>
                     {SUPPORTED_ACTIONS.map(({id, title}) => <>
-                        <SelectItem key={id} value={id} className="text-white hover:bg-slate-700 focus:bg-slate-700">{title}</SelectItem>
+                        <SelectItem key={id} value={id} className="text-slate-100 hover:bg-slate-700 focus:bg-slate-700">{title}</SelectItem>
                     </>)}
                     </SelectGroup>
                 </SelectContent>
             </Select>
 
-            {(selectedAction === "backpack" || selectedAction === "lighter" || selectedAction === "hyperliquid") && <div className="space-y-4 mt-6 p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+            {(selectedAction === "backpack" || selectedAction === "lighter" || selectedAction === "hyperliquid") && <div className="space-y-3 mt-4 p-3 bg-slate-800/50 rounded border border-slate-700">
                <div className="space-y-2">
-                   <label className="text-sm font-semibold text-slate-200 block">📊 Trade Type</label>
+                   <label className="text-sm font-medium text-slate-300 block">Trade Type</label>
                     <Select value={metadata?.type} onValueChange={(Value) => setMetadata(metadata => ({
                             ...metadata, 
                             type: Value
                             }))}>
-                            <SelectTrigger className="w-full bg-slate-800 border-slate-600 text-white hover:bg-slate-700 transition-colors">
+                            <SelectTrigger className="w-full bg-slate-800 border-slate-600 text-slate-100 hover:bg-slate-750 transition-colors">
                                 <SelectValue placeholder="Select trade type" />
                             </SelectTrigger>
                             <SelectContent className="bg-slate-800 border-slate-600">
                                 <SelectGroup>
-                                    <SelectItem value={"LONG"} className="text-green-400 hover:bg-slate-700 focus:bg-slate-700">📈 LONG</SelectItem>
-                                    <SelectItem value={"SHORT"} className="text-red-400 hover:bg-slate-700 focus:bg-slate-700">📉 SHORT</SelectItem>
+                                    <SelectItem value={"LONG"} className="text-slate-100 hover:bg-slate-700 focus:bg-slate-700">LONG</SelectItem>
+                                    <SelectItem value={"SHORT"} className="text-slate-100 hover:bg-slate-700 focus:bg-slate-700">SHORT</SelectItem>
                                 </SelectGroup>
                             </SelectContent>
                     </Select>
                 </div>
                 
                 <div className="space-y-2">
-                   <label className="text-sm font-semibold text-slate-200 block">🪙 Symbol</label>
+                   <label className="text-sm font-medium text-slate-300 block">Symbol</label>
                     <Select value={metadata?.symbol} onValueChange={(Value) => setMetadata(metadata => ({
                             ...metadata, 
                             symbol: Value
                             }))}>
-                            <SelectTrigger className="w-full bg-slate-800 border-slate-600 text-white hover:bg-slate-700 transition-colors">
+                            <SelectTrigger className="w-full bg-slate-800 border-slate-600 text-slate-100 hover:bg-slate-750 transition-colors">
                                 <SelectValue placeholder="Select a symbol" />
                             </SelectTrigger>
                             <SelectContent className="bg-slate-800 border-slate-600">
                                 <SelectGroup>
-                                    {SUPPORTED_ASSETS.map(asset => <SelectItem key={asset} value={asset} className="text-white hover:bg-slate-700 focus:bg-slate-700">
+                                    {SUPPORTED_ASSETS.map(asset => <SelectItem key={asset} value={asset} className="text-slate-100 hover:bg-slate-700 focus:bg-slate-700">
                                         {asset}
                                         </SelectItem>
                                     )}
@@ -108,8 +108,8 @@ export const ActionSheet = ({
                 </div>
 
                 <div className="space-y-2">
-                   <label className="text-sm font-semibold text-slate-200 block">💯 Quantity</label>
-                    <Input value={metadata.qty} placeholder="e.g., 100" className="bg-slate-800 border-slate-600 text-white placeholder:text-slate-500 focus:border-purple-500 focus:ring-1 focus:ring-purple-500" onChange={(e) => setMetadata({
+                   <label className="text-sm font-medium text-slate-300 block">Quantity</label>
+                    <Input value={metadata.qty} placeholder="e.g., 100" className="bg-slate-800 border-slate-600 text-slate-100 placeholder:text-slate-500 focus:border-slate-500 focus:ring-1 focus:ring-slate-500" onChange={(e) => setMetadata({
                         ...metadata,
                         qty: Number(e.target.value)
                     })} />
@@ -118,13 +118,13 @@ export const ActionSheet = ({
 
           </SheetDescription>
         </SheetHeader>
-        <SheetFooter className="mt-8">
+        <SheetFooter className="mt-6">
           <Button onClick={() => {
             onSelect(
                 selectedAction as NodeKind,
                 metadata as NodeMetadata
             )
-          }} type="submit" className="w-full bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-semibold py-6 text-base shadow-lg shadow-purple-900/50 transition-all">⚡ Create Action</Button>
+          }} type="submit" className="w-full bg-slate-700 hover:bg-slate-600 text-slate-100 font-medium py-5 transition-colors">Create Action</Button>
         </SheetFooter>
       </SheetContent>
     </Sheet>
