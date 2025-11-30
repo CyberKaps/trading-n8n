@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 import { SignupSchema } from 'common/types';
 import { UserModel } from 'db/client';
 import jwt from 'jsonwebtoken';
+import { authMiddleware } from './middleware';
 mongoose.connect(process.env.MONGO_URI!);
 
 const JWT_SECRET = process.env.JWT_SECRET!;
@@ -63,29 +64,29 @@ app.post("/signin", async (req, res) => {
   
 });
 
-app.post("/workflow", (req, res) => {
+app.post("/workflow", authMiddleware, (req, res) => {
   
 });
 
-app.put("/workflow", (req, res) => {
+app.put("/workflow", authMiddleware, (req, res) => {
   
 });
 
-app.get("/workflow/:workflowId", (req, res) => {
+app.get("/workflow/:workflowId", authMiddleware, (req, res) => {
   
 });
 
-app.get("/workflow/executions/:workflowId", (req, res) => {
+app.get("/workflow/executions/:workflowId", authMiddleware, (req, res) => {
   
 });
 
-app.post("/credentials", (req, res) => {
+// app.post("/credentials", (req, res) => {
   
-});
+// });
 
-app.get("/credentials", (req, res) => {
+// app.get("/credentials", (req, res) => {
 
-});
+// });
 
 app.get("/nodes", (req, res) => {
   
