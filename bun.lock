@@ -63,6 +63,9 @@
     },
     "packages/common": {
       "name": "common",
+      "dependencies": {
+        "zod": "^4.1.13",
+      },
       "devDependencies": {
         "@types/bun": "latest",
       },
