@@ -132,12 +132,19 @@ app.get("/workflow/:workflowId", authMiddleware, async (req, res) => {
 
   const workflow = await WorkflowModel.findById(req.params.workflowId);
 
-  if (!workflow) {
+  if (!workflow || workflow.userId.toString() !== req.userId) {
     res.status(404).json({ error: "Workflow not found" });
     return;
   }
 
   res.json(workflow);
+  
+});
+
+app.get("/workflows", authMiddleware, async (req, res) => {
+
+  const workflows = await WorkflowModel.find({ userId: req.userId });
+  res.json(workflows);
   
 });
 
