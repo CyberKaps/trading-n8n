@@ -6,11 +6,14 @@ const JWT_SECRET = process.env.JWT_SECRET!;
 
 export function authMiddleware(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers['authorization'] as string;
+
+  
     if (!authHeader) {
         return res.status(401).json({ error: "No token provided" });
     }
 
     try {
+        console.log("Auth Header:", authHeader);
         const decoded = jwt.verify(authHeader, JWT_SECRET) as JwtPayload;
         req.userId = decoded.id;
         next();

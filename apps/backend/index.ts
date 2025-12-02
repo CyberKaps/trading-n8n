@@ -2,11 +2,19 @@
 
 import express from 'express';
 import mongoose from 'mongoose';
-import { SignupSchema } from 'common/types';
-import { UserModel } from 'db/client';
+import { CreateWorkflowSchema, SignupSchema, UpdateWorkflowSchema } from 'common/types';
+import { ExecutionModel, NodesModel, UserModel, WorkflowModel } from 'db/client';
 import jwt from 'jsonwebtoken';
 import { authMiddleware } from './middleware';
 mongoose.connect(process.env.MONGO_URI!);
+
+// docker run -d \                  
+//   --name mongo \
+//   -p 27017:27017 \
+//   -v mongo-data:/data/db \
+//   -e MONGO_INITDB_ROOT_USERNAME=kalpesh \
+//   -e MONGO_INITDB_ROOT_PASSWORD=kalpesh \ 
+//   mongo
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 
@@ -64,19 +72,79 @@ app.post("/signin", async (req, res) => {
   
 });
 
-app.post("/workflow", authMiddleware, (req, res) => {
+app.post("/workflow", authMiddleware, async (req, res) => {
+  const userId = req.userId!;
+
+  console.log(userId)
+  
+  const { success, data } = CreateWorkflowSchema.safeParse(req.body);
+  if (!success) {
+    res.status(403).json({ error: "Invalid input" });
+    return;
+  }
+
+  try{
+    const workflow = await WorkflowModel.create({
+      userId,
+      nodes: data.nodes,
+      edges: data.edges,
+    })
+    res.json({
+      id: workflow._id,
+    })
+  } catch(e) {
+    res.status(411).json({
+      message: "Failed to create workflow"
+    })
+  }
+
+});
+
+app.put("/workflow/:workflowId", authMiddleware, async (req, res) => {
+
+  const { success, data } = UpdateWorkflowSchema.safeParse(req.body);
+  if (!success) {
+    res.status(403).json({ error: "Invalid input" });
+    return;
+  }
+
+  try {
+    const workflow = await WorkflowModel.findByIdAndUpdate(
+      req.params.workflowId, data, { new: true });
+
+    if (!workflow) {
+      res.status(404).json({ error: "Workflow not found" });
+      return;
+    }
+
+    res.json({
+      id: workflow._id,
+    });
+  } catch (e) {
+    res.status(411).json({
+      message: "Failed to update workflow"
+    });
+  }
   
 });
 
-app.put("/workflow", authMiddleware, (req, res) => {
+app.get("/workflow/:workflowId", authMiddleware, async (req, res) => {
+
+  const workflow = await WorkflowModel.findById(req.params.workflowId);
+
+  if (!workflow) {
+    res.status(404).json({ error: "Workflow not found" });
+    return;
+  }
+
+  res.json(workflow);
   
 });
 
-app.get("/workflow/:workflowId", authMiddleware, (req, res) => {
-  
-});
+app.get("/workflow/executions/:workflowId", authMiddleware, async (req, res) => {
 
-app.get("/workflow/executions/:workflowId", authMiddleware, (req, res) => {
+  const executions = await ExecutionModel.find({ workflowId: req.params.workflowId });
+  res.json(executions);
   
 });
 
@@ -88,7 +156,10 @@ app.get("/workflow/executions/:workflowId", authMiddleware, (req, res) => {
 
 // });
 
-app.get("/nodes", (req, res) => {
+app.get("/nodes", async (req, res) => {
+
+  const nodes = await NodesModel.find();
+  res.json(nodes);
   
 });
 
